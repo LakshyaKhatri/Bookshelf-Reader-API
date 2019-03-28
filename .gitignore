@@ -64,3 +64,4 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+migrations/
