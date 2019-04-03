@@ -13,7 +13,7 @@ def bookshelf_image_path(instance, filepath):
         ext=ext
     )
 
-    return "bookshelf/{final_filname}".format(
+    return "bookshelfs/{final_filname}".format(
         final_filname=final_filname
     )
 
