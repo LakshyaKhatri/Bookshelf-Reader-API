@@ -22,7 +22,7 @@ class Book(models.Model):
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Spine(models.Model):
@@ -30,4 +30,7 @@ class Spine(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id
+        return "{book_id} : {spine_number}".format(
+            book_id=self.book.id,
+            spine_number=self.id
+        )
