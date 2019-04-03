@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from detect_spines.models import Book
+from detect_spines.models import Bookshelf
 
 
-class BookSerializer(serializers.ModelSerializer):
+class BookshelfSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Book
-        fields = ("title", )
+        model = Bookshelf
+        fields = "__all__"

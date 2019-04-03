@@ -1,13 +1,8 @@
 from rest_framework import generics
-from detect_spines.models import Book
-from .serializers import BookSerializer
+from detect_spines.models import Bookshelf
+from .serializers import BookshelfSerializer
 
 
-class BookListView(generics.ListAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-
-class BookDetailView(generics.RetrieveAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
+class CreateBookshelfView(generics.CreateAPIView):
+    queryset = Bookshelf.objects.all()
+    serializer_class = BookshelfSerializer
