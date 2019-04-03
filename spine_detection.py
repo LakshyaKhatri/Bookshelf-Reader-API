@@ -1,6 +1,31 @@
 import math
 import cv2
 import numpy as np
+from PIL import Image
+from io import BytesIO
+
+
+def get_image_extension(django_image):
+    "Returns image extension from a django image"
+    pil_image = Image.open(django_image)
+    return pil_image.format
+
+
+def opencv_image_to_django_image(opencv_image, ext):
+    opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
+    django_image = BytesIO()
+
+    pil_image = Image.fromarray(opencv_image)
+    pil_image.save(django_image, format=ext)
+
+    return django_image
+
+
+def django_image_to_opencv_image(django_image):
+    pil_image = Image.open(django_image)
+    img = np.array(pil_image)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    return img
 
 
 def removeDuplicateLines(sorted_points):
@@ -159,8 +184,10 @@ def getSpines(img):
     return cropped_images
 
 
-def drawSpineLines(img):
-    img = img.copy()
+def drawSpineLines(django_image):
+    img = django_image_to_opencv_image(django_image)
+    ext = get_image_extension(django_image)
+
     final_image = reduceImageSize(img)
     final_points = detectSpines(final_image)
 
@@ -168,4 +195,8 @@ def drawSpineLines(img):
         ((x1, y1), (x2, y2)) = point
         final_image = cv2.line(final_image, (x1, y1), (x2, y2), (0, 0, 255), 10)
 
-    return final_image
+    django_image = opencv_image_to_django_image(
+        final_image,
+        ext
+    )
+    return django_image, ext
