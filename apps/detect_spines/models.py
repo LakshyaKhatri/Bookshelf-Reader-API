@@ -22,13 +22,13 @@ def bookshelf_image_path(instance, filepath):
 def spine_drawn_bookshelf_image_path(instance, filepath):
     base_name = os.path.basename(filepath)
     name, ext = os.path.splitext(base_name)
-    new_filename = 'spine_drawn_bookshelf'
+    new_filename = 'spine-drawn-bookshelf'
     final_filname = "{new_filename}{ext}".format(
         new_filename=new_filename,
         ext=ext
     )
 
-    return "spine_drawn_bookshelfs/{final_filname}".format(
+    return "spine-drawn-bookshelfs/{final_filname}".format(
         final_filname=final_filname
     )
 
