@@ -42,9 +42,7 @@ def spine_image_path(instance, filepath):
         ext=ext
     )
 
-    return "spines/{final_filname}".format(
-        final_filname=final_filname
-    )
+    return "spines/{final_filname}".format(final_filname=final_filname)
 
 
 class Bookshelf(models.Model):
@@ -53,6 +51,7 @@ class Bookshelf(models.Model):
         upload_to=spine_drawn_bookshelf_image_path, null=True, blank=True)
 
     def save(self, *args, **kwargs):
+        # Saves an image with spine lines drawn on it.
         processed_image, extension = spine_detection.drawSpineLines(self.image)
         self.spine_line_drawn_image.save(
             "image.{extension}".format(extension=extension.lower()),
@@ -60,6 +59,17 @@ class Bookshelf(models.Model):
             save=False
         )
         super(Bookshelf, self).save(*args, **kwargs)
+
+        # Creates and saves cropped spines to database
+        spine_images = spine_detection.getSpines(self.image)
+
+        for spine_image in spine_images:
+            spine = Spine.objects.create(bookshelf=self)
+            spine.image.save(
+                "image.{extension}".format(extension=extension.lower()),
+                File(spine_image),
+                save=True
+            )
 
     def __str__(self):
         return str(self.id)

@@ -176,12 +176,24 @@ def detectSpines(img):
     return final_points
 
 
-def getSpines(img):
-    img = img.copy()
+def getSpines(django_image):
+    img = django_image_to_opencv_image(django_image)
+    ext = get_image_extension(django_image)
+
     final_image = reduceImageSize(img)
     final_points = detectSpines(final_image)
     cropped_images = getCroppedImages(final_image, final_points)
-    return cropped_images
+
+    django_cropped_images = []
+    for cropped_image in cropped_images:
+        django_cropped_images.append(
+            opencv_image_to_django_image(
+                cropped_image,
+                ext
+            )
+        )
+
+    return django_cropped_images
 
 
 def drawSpineLines(django_image):
