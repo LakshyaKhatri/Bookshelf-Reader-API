@@ -21,6 +21,11 @@ class CreateBookshelfView(generics.CreateAPIView):
         return response
 
 
+class GetBookshelfView(generics.RetrieveAPIView):
+    queryset = Bookshelf.objects.all()
+    serializer_class = BookshelfSerializer
+
+
 class SpineListView(generics.ListAPIView):
     serializer_class = SpineListSerializer
 
