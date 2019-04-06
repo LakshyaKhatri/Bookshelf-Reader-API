@@ -52,24 +52,25 @@ class Bookshelf(models.Model):
 
     def save(self, *args, **kwargs):
         # Saves an image with spine lines drawn on it.
-        processed_image, extension = spine_detection.drawSpineLines(self.image)
-        self.spine_line_drawn_image.save(
-            "image.{extension}".format(extension=extension.lower()),
-            File(processed_image),
-            save=False
-        )
-        super(Bookshelf, self).save(*args, **kwargs)
-
-        # Creates and saves cropped spines to database
-        spine_images = spine_detection.getSpines(self.image)
-
-        for spine_image in spine_images:
-            spine = Spine.objects.create(bookshelf=self)
-            spine.image.save(
+        if self.id is None:
+            processed_image, extension = spine_detection.drawSpineLines(self.image)
+            self.spine_line_drawn_image.save(
                 "image.{extension}".format(extension=extension.lower()),
-                File(spine_image),
-                save=True
+                File(processed_image),
+                save=False
             )
+            super(Bookshelf, self).save(*args, **kwargs)
+
+            # Creates and saves cropped spines to database
+            spine_images = spine_detection.getSpines(self.image)
+
+            for spine_image in spine_images:
+                spine = Spine.objects.create(bookshelf=self)
+                spine.image.save(
+                    "image.{extension}".format(extension=extension.lower()),
+                    File(spine_image),
+                    save=True
+                )
 
     def __str__(self):
         return str(self.id)
