@@ -28,7 +28,7 @@ SECRET_KEY = 'piuj%rb3u0)^utqd24(^wp)krvkdb8bzvt^dp8o#(fw)l1h*zc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '192.168.42.179']
+ALLOWED_HOSTS = ['0.0.0.0', '192.168.42.130']
 
 
 # Application definition
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'cv2',
     'numpy',
+    'bs4',
+    'requests'
 ]
 
 MIDDLEWARE = [
