@@ -1,6 +1,15 @@
 from rest_framework import generics
-from detect_spines.models import Bookshelf, Spine
-from .serializers import BookshelfSerializer, SpineListSerializer
+from detect_spines.models import (
+    Bookshelf,
+    Spine,
+    Book
+)
+
+from .serializers import (
+    BookshelfSerializer,
+    SpineListSerializer,
+    BookSerializer
+)
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -34,3 +43,24 @@ class SpineListView(generics.ListAPIView):
         bookshelf = Bookshelf.objects.filter(id=bookshelf_pk)[0]
         queryset = Spine.objects.filter(bookshelf=bookshelf)
         return queryset
+
+
+class AddBookView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        obj = serializer.save()
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        headers['id'] = obj.id
+        response = Response({"Success": "Created Successfully"},
+                            status=status.HTTP_201_CREATED, headers=headers)
+        return response
+
+
+class GetBookView(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from detect_spines.models import Bookshelf, Spine
+from detect_spines.models import Bookshelf, Spine, Book
 
 
 class BookshelfSerializer(serializers.ModelSerializer):
@@ -12,3 +12,9 @@ class SpineListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spine
         fields = ("image", )
+
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = "__all__"
