@@ -100,7 +100,9 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         # fetch book cover image URL and isbn then save the object
         if self.id is None:
-            self.title.save(str(self.title).title(), save=False)
-            coverImageURL, isbn = ScrapBook.getImageAndISBN(self.title)
-
-            super(Bookshelf, self).save(*args, **kwargs)
+            self.title = str(self.title).title()
+            self.title, coverImageURL, isbn = ScrapBook.getTitleImageAndISBN(self.title)
+            self.book_cover_url = coverImageURL
+            self.isbn_10 = isbn
+            self.google_books_link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+            super(Book, self).save(*args, **kwargs)
