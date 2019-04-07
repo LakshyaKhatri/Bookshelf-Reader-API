@@ -3,7 +3,7 @@ import urllib
 import requests
 
 
-def getImageAndISBN(book_title):
+def getTitleImageAndISBN(book_title):
     search_txt = book_title + " book amazon india"
     search_txt = urllib.parse.quote_plus(search_txt)
     url = 'https://google.com/search?q=' + search_txt
@@ -32,4 +32,7 @@ def getImageAndISBN(book_title):
             imageUrl = imgTag.get('src')
             break
 
-    return (imageUrl, isbn)
+    title = soup.h2.span.text
+    title = title.title()
+
+    return (title, imageUrl, isbn)
