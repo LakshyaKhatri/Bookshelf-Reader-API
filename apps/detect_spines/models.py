@@ -85,3 +85,10 @@ class Spine(models.Model):
             book_id=self.bookshelf.id,
             spine_number=self.id
         )
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=500, null=False)
+    book_cover_url = models.CharField(max_length=32656232365, null=True)
+    isbn_10 = models.CharField(max_length=20, null=True)
+    google_books_link = models.CharField(max_length=32656232365, null=True)
