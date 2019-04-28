@@ -2,7 +2,7 @@ from django.db import models
 import os
 import spine_detection
 from django.core.files.base import File
-import ScrapBook
+import scrap_book
 # Create your models here.
 
 
@@ -101,7 +101,7 @@ class Book(models.Model):
         # fetch book cover image URL and isbn then save the object
         if self.id is None:
             self.title = str(self.title).title()
-            self.title, coverImageURL, isbn = ScrapBook.getTitleImageAndISBN(self.title)
+            self.title, coverImageURL, isbn = scrap_book.getTitleImageAndISBN(self.title)
             self.book_cover_url = coverImageURL
             self.isbn_10 = isbn
             self.google_books_link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
