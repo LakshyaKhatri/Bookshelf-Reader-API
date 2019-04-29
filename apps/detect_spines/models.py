@@ -99,7 +99,7 @@ class Book(models.Model):
     isbn_10 = models.CharField(max_length=20, null=True, blank=True)
     isbn_13 = models.CharField(max_length=20, null=True, blank=True)
     total_pages = models.CharField(max_length=10, null=True, blank=True)
-    gener = models.CharField(max_length=500, null=True, blank=True)
+    genre = models.CharField(max_length=500, null=True, blank=True)
     dimensions = models.CharField(max_length=500, null=True, blank=True)
     book_cover_url = models.CharField(max_length=32656232365, null=True, blank=True)
 
@@ -121,7 +121,7 @@ class Book(models.Model):
             self.isbn_10 = bookInfo.isbn_10
             self.isbn_13 = bookInfo.isbn_13
             self.total_pages = bookInfo.total_pages
-            self.gener = bookInfo.genre
+            self.genre = bookInfo.genre
             # TODO: Add actual dimensions
             self.dimensions = "19.7 x 13 x 2.2 cm"
             self.book_cover_url = bookInfo.image_url
