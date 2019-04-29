@@ -3,6 +3,7 @@ import os
 import spine_detection
 from django.core.files.base import File
 import scrap_book
+import random
 # Create your models here.
 
 
@@ -90,9 +91,17 @@ class Spine(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=500, null=False)
-    book_cover_url = models.CharField(max_length=32656232365, null=True, blank=True)
+    author = models.CharField(max_length=500, null=True, blank=True)
+    price = models.CharField(max_length=20, null=True, blank=True)
+    rating = models.CharField(max_length=20, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    publisher = models.CharField(max_length=500, null=True, blank=True)
     isbn_10 = models.CharField(max_length=20, null=True, blank=True)
-    google_books_link = models.CharField(max_length=32656232365, null=True, blank=True)
+    isbn_13 = models.CharField(max_length=20, null=True, blank=True)
+    total_pages = models.CharField(max_length=10, null=True, blank=True)
+    gener = models.CharField(max_length=500, null=True, blank=True)
+    dimensions = models.CharField(max_length=500, null=True, blank=True)
+    book_cover_url = models.CharField(max_length=32656232365, null=True, blank=True)
 
     def __str__(self):
         return "{id}. {book_title}".format(id=self.id, book_title=self.title)
@@ -101,8 +110,19 @@ class Book(models.Model):
         # fetch book cover image URL and isbn then save the object
         if self.id is None:
             self.title = str(self.title).title()
-            self.title, coverImageURL, isbn = scrap_book.getTitleImageAndISBN(self.title)
-            self.book_cover_url = coverImageURL
-            self.isbn_10 = isbn
-            self.google_books_link = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+            bookInfo = scrap_book.getBookInfo(self.title)
+            self.title = bookInfo.title
+            self.author = bookInfo.author
+            # TODO: Add actual price
+            self.price = "Rs. " + str(random.randint(0, 9999)) + ".00"
+            self.rating = bookInfo.rating
+            self.description = bookInfo.description
+            self.publisher = bookInfo.publisher
+            self.isbn_10 = bookInfo.isbn_10
+            self.isbn_13 = bookInfo.isbn_13
+            self.total_pages = bookInfo.total_pages
+            self.gener = bookInfo.genre
+            # TODO: Add actual dimensions
+            self.dimensions = "19.7 x 13 x 2.2 cm"
+            self.book_cover_url = bookInfo.image_url
             super(Book, self).save(*args, **kwargs)

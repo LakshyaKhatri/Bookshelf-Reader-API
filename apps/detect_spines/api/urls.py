@@ -10,7 +10,6 @@ from .views import (
 
 
 urlpatterns = [
-    # path('', BookListView.as_view()),
     path('create-bookshelf/', CreateBookshelfView.as_view()),
     path('bookshelf/<pk>/', GetBookshelfView.as_view()),
     re_path(r'spines/(?P<bookshelf_pk>\d+)/', SpineListView.as_view()),
