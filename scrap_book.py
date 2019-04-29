@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib
 import requests
+import re
 
 
 class BookInfo:
@@ -16,6 +17,14 @@ class BookInfo:
         self.description = kwargs.get("description")
         self.total_pages = kwargs.get("total_pages")
         self.genre = kwargs.get("genre")
+
+
+def formatPublisher(publisher):
+    publisher = publisher[publisher.find("by") + 3:]
+    publisher = publisher[0:publisher.find("\n")] + " " + \
+        publisher[publisher.find("("):publisher.find(")") + 1]
+
+    return publisher
 
 
 def getBookInfo(book_title):
@@ -41,9 +50,9 @@ def getBookInfo(book_title):
     title = soup.find("div", {"class": "infoBoxRowItem"}).text
     author = soup.find("span", {"itemprop": "name"}).text
     publisher = soup.find_all("div", {"class": "row"})[1].text
-    publisher = publisher[publisher.find("by") + 3:]
+    publisher = formatPublisher(publisher)
     isbn13 = soup.find("span", {"itemprop": "isbn"}).text
-    rating = soup.find("span", {"itemprop": "ratingValue"}).text
+    rating = ".".join(re.findall('\d+', soup.find("span", {"itemprop": "ratingValue"}).text))
     description = soup.find(id="description").find_all("span")[1].text
     total_pages = soup.find("span", {"itemprop": "numberOfPages"}).text
     total_pages = total_pages[0:total_pages.find("pages")]
