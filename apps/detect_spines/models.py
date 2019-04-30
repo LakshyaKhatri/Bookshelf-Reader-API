@@ -114,7 +114,7 @@ class Book(models.Model):
             self.title = bookInfo.title
             self.author = bookInfo.author
             # TODO: Add actual price
-            self.price = "Rs. " + str(random.randint(0, 9999)) + ".00"
+            self.price = "Rs. " + str(random.randint(100, 500)) + ".00"
             self.rating = bookInfo.rating
             self.description = bookInfo.description
             self.publisher = bookInfo.publisher
