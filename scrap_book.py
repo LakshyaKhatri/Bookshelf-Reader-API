@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
-import urllib
 import requests
 import re
-
+from googlesearch import search
 
 class BookInfo:
 
@@ -29,20 +28,14 @@ def formatPublisher(publisher):
 
 def getBookInfo(book_title):
     search_txt = book_title + " book amazon india"
-    search_txt = urllib.parse.quote_plus(search_txt)
-    url = 'https://google.com/search?q=' + search_txt
-
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
 
     book_amazon_link = ""
-    for link in soup.find_all('a'):
-        if "amazon.in" in link.get('href') and "dp/" in link.get('href'):
-            book_amazon_link = link.get('href')
+    for link in search(search_txt, tld="co.in", num=10, stop=5, pause=2):
+        if "amazon.in" in link and "dp/" in link:
+            book_amazon_link = link
             break
 
-    isbn10 = book_amazon_link[book_amazon_link.find("dp/") + 3: book_amazon_link.find('&')]
-
+    isbn10 = book_amazon_link[book_amazon_link.find("dp/") + 3:]
     response = requests.get("https://www.goodreads.com/book/isbn/" + isbn10)
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -71,5 +64,3 @@ def getBookInfo(book_title):
         total_pages=total_pages,
         genre=genre
     )
-
-getBookInfo("The subtle art of not giving a fuck")
