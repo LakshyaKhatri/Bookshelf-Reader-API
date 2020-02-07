@@ -71,3 +71,5 @@ def getBookInfo(book_title):
         total_pages=total_pages,
         genre=genre
     )
+
+getBookInfo("The subtle art of not giving a fuck")
