@@ -1,2 +1,2 @@
 # Bookshelf-Reader-API
-API for Bookshelf Reader App
+A browsable REST API for recognizing book spines in an image.
