@@ -43,7 +43,7 @@ Upload book title text for scrapping information  | /api/add-book/ | ID of the c
 Get Book Information | /api/book/\<book-id\>/ | Scrapped book information.
 
 # Client Side Application
-If you want to see how can this REST API can be used at client side then checkout [Bookshelf Reader Android Application](https://github.com/LakshyaKhatri/Bookshelf-Reader)
+If you want to see how this REST API can be used at client side then checkout [Bookshelf Reader Android Application](https://github.com/LakshyaKhatri/Bookshelf-Reader)
 
 # Liscence
 MIT License
