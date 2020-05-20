@@ -26,9 +26,21 @@ Add these URLs after your landing URL
 
 Function                | url                    | Return  
 :----------------------:|:----------------------:|:----------------------------------------------------:  
-Upload Bookshelf Image  | /api/create-bookshelf/ | ID of the created uploaded image (Inside the Header)  
-Spine Line Drawn Image  | /api/bookshelf/<bookshelf-id>/ | Spine line drawn image
-Cropped Spines          | /api/spines/<bookshelf-id>/ | URLS of the cropped spines images
+Upload Bookshelf Image  | /api/create-bookshelf/ | ID of the created uploaded image (Inside the Response Header)  
+Spine Line Drawn Image  | /api/bookshelf/\<bookshelf-id\>/ | Spine line drawn image
+Cropped Spines          | /api/spines/\<bookshelf-id\>/ | URLS of the cropped spines images
+
+# Further Implementation
+
+This project contains scrappers to scrap the information of all the books recognized in the spine image. Recognized spine can be sent for text recognition and then the recieved text can be uploaded to below URL's for scrapping the book's information information.
+
+> *NOTE 1:* It's okay if the recognized text is not accurate. The scrapper will automatically find the correct book.  
+> *NOTE 2:* The uloaded text is expected to be the book title \[and author name\]
+
+Function                | url                    | Return  
+:----------------------:|:----------------------:|:----------------------------------------------------:  
+Upload book title text for scrapping information  | /api/add-book/ | ID of the created Book object (Inside the Response Header)
+Get Book Information | /api/book/\<book-id\>/ | Scrapped book information.
 
 # Liscence
 MIT License
