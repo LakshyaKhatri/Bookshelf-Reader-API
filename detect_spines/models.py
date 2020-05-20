@@ -11,13 +11,13 @@ def bookshelf_image_path(instance, filepath):
     base_name = os.path.basename(filepath)
     name, ext = os.path.splitext(base_name)
     new_filename = 'bookshelf'
-    final_filname = "{new_filename}{ext}".format(
+    new_filename = "{new_filename}{ext}".format(
         new_filename=new_filename,
         ext=ext
     )
 
-    return "bookshelfs/{final_filname}".format(
-        final_filname=final_filname
+    return "bookshelfs/{new_filename}".format(
+        new_filename=new_filename
     )
 
 
