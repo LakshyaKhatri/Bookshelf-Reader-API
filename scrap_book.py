@@ -3,6 +3,7 @@ import requests
 import re
 from googlesearch import search
 
+
 class BookInfo:
 
     def __init__(self, **kwargs):
@@ -18,7 +19,7 @@ class BookInfo:
         self.genre = kwargs.get("genre")
 
 
-def formatPublisher(publisher):
+def format_publisher(publisher):
     publisher = publisher[publisher.find("by") + 3:]
     publisher = publisher[0:publisher.find("\n")] + " " + \
         publisher[publisher.find("("):publisher.find(")") + 1]
@@ -26,7 +27,7 @@ def formatPublisher(publisher):
     return publisher
 
 
-def getBookInfo(book_title):
+def get_book_info(book_title):
     search_txt = book_title + " book amazon india"
 
     book_amazon_link = ""
@@ -43,7 +44,7 @@ def getBookInfo(book_title):
     title = soup.find("div", {"class": "infoBoxRowItem"}).text
     author = soup.find("span", {"itemprop": "name"}).text
     publisher = soup.find_all("div", {"class": "row"})[1].text
-    publisher = formatPublisher(publisher)
+    publisher = format_publisher(publisher)
     isbn13 = soup.find("span", {"itemprop": "isbn"}).text
     rating = ".".join(re.findall('\d+', soup.find("span", {"itemprop": "ratingValue"}).text))
     description = soup.find(id="description").find_all("span")[1].text

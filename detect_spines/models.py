@@ -55,7 +55,7 @@ class Bookshelf(models.Model):
     def save(self, *args, **kwargs):
         # Saves an image with spine lines drawn on it.
         if self.id is None:
-            processed_image, extension = spine_detection.drawSpineLines(self.image)
+            processed_image, extension = spine_detection.draw_spine_lines(self.image)
             self.spine_line_drawn_image.save(
                 "image.{extension}".format(extension=extension.lower()),
                 File(processed_image),
@@ -64,7 +64,7 @@ class Bookshelf(models.Model):
             super(Bookshelf, self).save(*args, **kwargs)
 
             # Creates and saves cropped spines to database
-            spine_images = spine_detection.getSpines(self.image)
+            spine_images = spine_detection.get_spines(self.image)
 
             for spine_image in spine_images:
                 spine = Spine.objects.create(bookshelf=self)
@@ -110,7 +110,7 @@ class Book(models.Model):
         # fetch book cover image URL and isbn then save the object
         if self.id is None:
             self.title = str(self.title).title()
-            bookInfo = scrap_book.getBookInfo(self.title)
+            bookInfo = scrap_book.get_book_info(self.title)
             self.title = bookInfo.title
             self.author = bookInfo.author
             # TODO: Add actual price

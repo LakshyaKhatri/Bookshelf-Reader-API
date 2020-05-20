@@ -1,8 +1,8 @@
-import math
-import cv2
-import numpy as np
-from PIL import Image
 from io import BytesIO
+from PIL import Image
+import numpy as np
+import cv2
+import math
 
 
 def get_image_extension(django_image):
@@ -28,7 +28,7 @@ def django_image_to_opencv_image(django_image):
     return img
 
 
-def removeDuplicateLines(sorted_points):
+def remove_duplicate_lines(sorted_points):
     last_x1 = 0
     non_duplicate_points = []
     for point in sorted_points:
@@ -44,7 +44,7 @@ def removeDuplicateLines(sorted_points):
     return non_duplicate_points
 
 
-def getPointsInXAndY(hough_lines, max_y):
+def get_points_in_x_and_y(hough_lines, max_y):
     points = []
     for line in hough_lines:
         rho, theta = line[0]
@@ -68,7 +68,7 @@ def getPointsInXAndY(hough_lines, max_y):
     return points
 
 
-def shortenLine(points, y_max):
+def shorten_line(points, y_max):
     shortened_points = []
     for point in points:
         ((x1, y1), (x2, y2)) = point
@@ -99,7 +99,7 @@ def shortenLine(points, y_max):
     return shortened_points
 
 
-def getCroppedImages(image, points):
+def get_cropped_images(image, points):
     image = image.copy()
     y_max, _, _ = image.shape
     last_x1 = 0
@@ -134,7 +134,7 @@ def getCroppedImages(image, points):
     return cropped_images
 
 
-def reduceImageSize(img):
+def resize_img(img):
     img = img.copy()
     img_ht, img_wd, _ = img.shape
     ratio = img_wd / img_ht
@@ -145,7 +145,7 @@ def reduceImageSize(img):
     return resized_image
 
 
-def detectSpines(img):
+def detect_spines(img):
     img = img.copy()
     height, width, _ = img.shape
 
@@ -167,22 +167,22 @@ def detectSpines(img):
     lines = cv2.HoughLines(img_erosion, 1, np.pi / 180, 100)
     if lines is None:
         return []
-    points = getPointsInXAndY(lines, height)
+    points = get_points_in_x_and_y(lines, height)
     points.sort(key=lambda val: val[0][0])
-    non_duplicate_points = removeDuplicateLines(points)
+    non_duplicate_points = remove_duplicate_lines(points)
 
-    final_points = shortenLine(non_duplicate_points, height)
+    final_points = shorten_line(non_duplicate_points, height)
 
     return final_points
 
 
-def getSpines(django_image):
+def get_spines(django_image):
     img = django_image_to_opencv_image(django_image)
     ext = get_image_extension(django_image)
 
-    final_image = reduceImageSize(img)
-    final_points = detectSpines(final_image)
-    cropped_images = getCroppedImages(final_image, final_points)
+    final_image = resize_img(img)
+    final_points = detect_spines(final_image)
+    cropped_images = get_cropped_images(final_image, final_points)
 
     django_cropped_images = []
     for cropped_image in cropped_images:
@@ -196,12 +196,12 @@ def getSpines(django_image):
     return django_cropped_images
 
 
-def drawSpineLines(django_image):
+def draw_spine_lines(django_image):
     img = django_image_to_opencv_image(django_image)
     ext = get_image_extension(django_image)
 
-    final_image = reduceImageSize(img)
-    final_points = detectSpines(final_image)
+    final_image = resize_img(img)
+    final_points = detect_spines(final_image)
 
     for point in final_points:
         ((x1, y1), (x2, y2)) = point
