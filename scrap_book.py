@@ -20,6 +20,10 @@ class BookInfo:
 
 
 def format_publisher(publisher):
+    '''
+    Cleans and returns the publisher name scrapped from
+    the webpage.
+    '''
     publisher = publisher[publisher.find("by") + 3:]
     publisher = publisher[0:publisher.find("\n")] + " " + \
         publisher[publisher.find("("):publisher.find(")") + 1]
@@ -28,6 +32,11 @@ def format_publisher(publisher):
 
 
 def get_book_info(book_title):
+    '''
+    Searches the internet for book_title
+    and returns a BookInfo object containing
+    the scrapped information
+    '''
     search_txt = book_title + " book amazon india"
 
     book_amazon_link = ""

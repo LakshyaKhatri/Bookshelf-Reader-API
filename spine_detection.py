@@ -6,7 +6,9 @@ import math
 
 
 def get_image_extension(django_image):
-    "Returns image extension from a django image"
+    '''
+    Returns image extension from a django image
+    '''
     pil_image = Image.open(django_image)
     return pil_image.format
 
@@ -29,6 +31,11 @@ def django_image_to_opencv_image(django_image):
 
 
 def remove_duplicate_lines(sorted_points):
+    '''
+    Serches for the lines that are drawn
+    over each other in the image and returns
+    a list of non duplicate line co-ordinates
+    '''
     last_x1 = 0
     non_duplicate_points = []
     for point in sorted_points:
@@ -45,6 +52,11 @@ def remove_duplicate_lines(sorted_points):
 
 
 def get_points_in_x_and_y(hough_lines, max_y):
+    '''
+    Takes a list of trigonometric form of lines
+    and returns their starting and ending
+    co-ordinates
+    '''
     points = []
     for line in hough_lines:
         rho, theta = line[0]
@@ -69,6 +81,12 @@ def get_points_in_x_and_y(hough_lines, max_y):
 
 
 def shorten_line(points, y_max):
+    '''
+    Takes a list of starting and ending
+    co-ordinates of different lines
+    and returns their trimmed form matching
+    the image height
+    '''
     shortened_points = []
     for point in points:
         ((x1, y1), (x2, y2)) = point
@@ -100,6 +118,11 @@ def shorten_line(points, y_max):
 
 
 def get_cropped_images(image, points):
+    '''
+    Takes a spine line drawn image and
+    returns a list of opencv images splitted
+    from the drawn lines
+    '''
     image = image.copy()
     y_max, _, _ = image.shape
     last_x1 = 0
@@ -146,6 +169,10 @@ def resize_img(img):
 
 
 def detect_spines(img):
+    '''
+    Returns a list of lines seperating
+    the detected spines in the image
+    '''
     img = img.copy()
     height, width, _ = img.shape
 
