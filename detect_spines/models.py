@@ -52,7 +52,9 @@ class Bookshelf(models.Model):
         upload_to=spine_drawn_bookshelf_image_path, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        # Saves an image with spine lines drawn on it.
+        '''
+        Saves an image with spine lines drawn on it
+        '''
         if self.id is None:
             processed_image, extension = spine_detection.draw_spine_lines(self.image)
             self.spine_line_drawn_image.save(
