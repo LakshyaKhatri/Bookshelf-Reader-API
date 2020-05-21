@@ -4,7 +4,6 @@ import spine_detection
 from django.core.files.base import File
 import scrap_book
 import random
-# Create your models here.
 
 
 def bookshelf_image_path(instance, filepath):
