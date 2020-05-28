@@ -35,7 +35,7 @@ Cropped Spines          | /api/spines/\<bookshelf-id\>/ | URLS of the cropped sp
 This project contains scrappers to scrap the information of all the books recognized in the spine image. Recognized spine can be sent for text recognition and then the recieved text can be uploaded to below URL's for scrapping the book's information.
 
 > *NOTE 1:* It's okay if the recognized text is not accurate. The scrapper will automatically find the correct book.  
-> *NOTE 2:* The uloaded text is expected to be the book title \[and author name\].
+> *NOTE 2:* The uploaded text is expected to be the book title \[and author name\].
 
 Function                | url                    | Return  
 :----------------------:|:----------------------:|:----------------------------------------------------:  
