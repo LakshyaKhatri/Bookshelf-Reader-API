@@ -39,8 +39,8 @@ This project contains scrappers to scrap the information of all the books recogn
 
 Function                | url                    | Return  
 :----------------------:|:----------------------:|:----------------------------------------------------:  
-Upload book title text for scrapping information  | /api/add-book/ | ID of the created Book object (Inside the Response Header)
-Get Book Information | /api/book/\<book-id\>/ | Scrapped book information.
+Upload book title text for scrapping information  | `/api/add-book/` | ID of the created Book object (Inside the Response Header)
+Get Book Information | `/api/book/<book-id>/` | Scrapped book information.
 
 # Client Side Application
 If you want to see how this REST API can be used at client side then checkout [Bookshelf Reader Android Application](https://github.com/LakshyaKhatri/Bookshelf-Reader)
