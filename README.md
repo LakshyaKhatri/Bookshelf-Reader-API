@@ -26,9 +26,9 @@ Add these URLs after your landing URL
 
 Function                | url                    | Return  
 :----------------------:|:----------------------:|:----------------------------------------------------:  
-Upload Bookshelf Image  | /api/create-bookshelf/ | ID for referring the uploaded image (Inside the Response Header)  
-Spine Line Drawn Image  | /api/bookshelf/\<bookshelf-id\>/ | Spine line drawn image
-Cropped Spines          | /api/spines/\<bookshelf-id\>/ | URLS of the cropped spine images
+Upload Bookshelf Image  | `/api/create-bookshelf/` | ID for referring the uploaded image (Inside the Response Header)  
+Spine Line Drawn Image  | `/api/bookshelf/<bookshelf-id>/` | Spine line drawn image
+Cropped Spines          | `/api/spines/<bookshelf-id>/` | URLS of the cropped spine images
 
 # Further Implementation
 
